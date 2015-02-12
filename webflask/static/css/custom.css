@@ -33,3 +33,7 @@
     background: url(/static/images/logo.png) no-repeat;
     margin: 50px auto;
 }
+
+.ajax-loader{
+    margin-left: 48%;
+}
