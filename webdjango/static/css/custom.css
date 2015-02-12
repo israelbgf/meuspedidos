@@ -1,0 +1,39 @@
+.center {
+    text-align: center;
+}
+
+.error {
+    margin-left: 5px;
+}
+
+.success-message {
+    color: #0192f6;
+    margin-left: 5px;
+}
+
+.error-message {
+    color: #f60038;
+    margin-left: 5px;
+}
+
+.hiden {
+    display: none;
+}
+
+.button-primary {
+    margin-left: 40%;
+}
+
+.logo {
+    width: 180px;
+    height: 180px;
+    border-radius: 90px;
+    -webkit-border-radius: 90px;
+    -moz-border-radius: 90px;
+    background: url(/static/images/logo.png) no-repeat;
+    margin: 50px auto;
+}
+
+.ajax-loader{
+    margin-left: 48%;
+}
