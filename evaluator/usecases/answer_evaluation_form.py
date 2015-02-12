@@ -4,7 +4,7 @@ VALID_EMAIL_PATTERN = '[^@]+@[^@]+\.[^@]+'
 
 
 class EvaluationForm:
-    def __init__(self, email="", name="", skills=None):
+    def __init__(self, name="", email="", skills=None):
         self.email = email
         self.name = name
         self.skills = skills if skills else {
@@ -54,4 +54,4 @@ class AnswerEvaluationFormUseCase:
             aptitudes.append('BACKEND')
         if skills.get('android', 0) >= 7 and skills.get('ios', 0) >= 7:
             aptitudes.append('MOBILE')
-        return 'NONE' if not aptitudes else aptitudes
+        return ['NONE'] if not aptitudes else aptitudes

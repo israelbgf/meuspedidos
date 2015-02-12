@@ -46,7 +46,7 @@ class TestEvaluationFormValidation(unittest.TestCase):
         response = self.use_case.execute(EvaluationForm(skills={'ios': 5}))
         self.assertFalse(response['success'])
         self.assertNotIn("INVALID_IOS_SKILL", response['errors'])
-        
+
 
 class TestEmailSendingWithCorrespondingAptitude(unittest.TestCase):
     def setUp(self):
@@ -60,7 +60,7 @@ class TestEmailSendingWithCorrespondingAptitude(unittest.TestCase):
         self.form.skills['html'] = 10
         self.form.skills['css'] = 10
         self.form.skills['javascript'] = 10
-        
+
         response = self.use_case.execute(self.form)
 
         self.assertIn('FRONTEND', self.email_gateway.templates)
@@ -98,6 +98,7 @@ class TestEmailSendingWithCorrespondingAptitude(unittest.TestCase):
 
         response = self.use_case.execute(self.form)
 
+        self.assertEqual(3, len(self.email_gateway.templates))
         self.assertIn('FRONTEND', self.email_gateway.templates)
         self.assertIn('BACKEND', self.email_gateway.templates)
         self.assertIn('MOBILE', self.email_gateway.templates)
@@ -107,6 +108,7 @@ class TestEmailSendingWithCorrespondingAptitude(unittest.TestCase):
     def test_sent_email_for_none_aptitude(self):
         response = self.use_case.execute(self.form)
 
+        self.assertEqual(1, len(self.email_gateway.templates))
         self.assertIn('NONE', self.email_gateway.templates)
         self.assertEqual(self.email_gateway.email, "snake@outerheaven.com")
         self.assertTrue(response['success'])

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+    <head lang="pt">
+        <meta charset="UTF-8">
+        <title>Recrutamento MeusPedidos</title>
+        <link href='//fonts.googleapis.com/css?family=Raleway:400,300,600' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="/static/css/normalize.css">
+        <link rel="stylesheet" href="/static/css/skeleton.css">
+        <link rel="stylesheet" href="/static/css/custom.css">
+        <script src="/static/js/jquery-2.1.3.min.js"></script>
+        <script src="/static/js/jquery.validate.min.js"></script>
+        <script src="/static/js/forms/jquery.form.min.js"></script>
+        <script src="/static/js/forms/messages_pt_BR.js"></script>
+        <script src="/static/js/index.js"></script>
+    </head>
+    <body class="container row">
+        <section class="twelve columns">
+            <form action="/api/recruitment" method="post">
+
+                <div class="logo">
+                </div>
+
+                <p>
+                    Nós na <b>MeusPedidos</b> queremos montar um time fodástico com desenvolvedores realmente acima da
+                    média. Preencha o formulário indicando suas habilidades para sabermos onde você melhor se enquadra 
+                    no nosso time!
+                </p>
+
+                <div class="row">
+                    <div class="six columns">
+                        <label for="name">Seu nome</label>
+                        <input id="name" name="name" type="text" placeholder="Solid Snake" class="u-full-width" tabindex="1" required>
+                    </div>
+                    <div class="six columns">
+                        <label for="email">Seu email</label>
+                        <input id="email" name="email" type="email" placeholder="snake@outerheaven.com" class="u-full-width" tabindex="2" required>
+                    </div>
+                </div>
+
+                <p>Em uma escala de 0 (não sei nada), à 10 (sou foda), avalie suas aptidões.</p>
+
+                <div class="row">
+                    <div class="four columns">
+                        <label for="html">HTML</label>
+                        <input id='html' type="number" name="html" min="0" max="10" value="0" tabindex="3">
+                    </div>
+                    <div class="four columns">
+                        <label for="python">Python</label>
+                        <input id='python' type="number" name="python" min="0" max="10" value="0" tabindex="6">
+                    </div>
+                    <div class="four columns">
+                        <label for='android'>Desenvolvimento Android</label>
+                        <input id='android' type="number" name="android" min="0" max="10" value="0" tabindex="8">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="four columns">
+                        <label for='css'>CSS</label>
+                        <input id='css' type="number" name="css" min="0" max="10" value="0" tabindex="4">
+                    </div>
+                    <div class="four columns">
+                        <label for="django">Django</label>
+                        <input id='django' type="number" name="django" min="0" max="10" value="0" tabindex="7">
+                    </div>
+                    <div class="four columns">
+                        <label for='ios'>Desenvolvimento iOS</label>
+                        <input id='ios' type="number" name="ios" min="0" max="10" value="0" tabindex="9">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="four columns">
+                        <label for='javascript'>JavaScript</label>
+                        <input id='javascript' type="number" name="javascript" min="0" max="10" value="0" tabindex="5">
+                    </div>
+                    <div class="four columns">
+                    </div>
+                    <div class="four columns">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="twelve columns">
+                        <input type="submit" class="button-primary" value="OK, estou pronto!">
+                        <h3 class="success-message hiden center">Boa fera! Agora fique de olho no seu email. =)</h3>
+                        <h3 class="error-message hiden center">Ops! Aconteceu algo errado. Tente novamente mais tarde!</h3>
+                    </div>
+                </div>
+
+            </form>
+        </section>
+    </body>
+
+</html>
