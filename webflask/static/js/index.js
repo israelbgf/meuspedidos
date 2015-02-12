@@ -14,17 +14,16 @@ $(function(){
         $('form').validate({
             submitHandler: function (form) {
                 $('input[type=submit]').fadeOut(function () {
-                    ajaxLoader.fadeIn(function () {
+                    ajaxLoader.fadeIn(function() {
                         $(form).ajaxSubmit({
-                            success: function () {
-                                ajaxLoader.fadeOut(function () {
-                                    $('.success-message').fadeIn();
-                                });
+                            success: function(json) {
+                                if(json.success)
+                                    hideAjaxLoaderAndShow('.success-message');
+                                else
+                                    hideAjaxLoaderAndShow('.error-message');
                             },
-                            error: function () {
-                                ajaxLoader.fadeOut(function () {
-                                    $('.error-message').fadeIn();
-                                });
+                            error: function() {
+                                hideAjaxLoaderAndShow('.error-message');
                             }
                         });
                     });
@@ -37,4 +36,11 @@ $(function(){
             errorClass: "error-message"
         });
     }
+
+    function hideAjaxLoaderAndShow(selector) {
+        ajaxLoader.fadeOut(function () {
+            $(selector).fadeIn();
+        });
+    }
+    
 });
