@@ -82,7 +82,7 @@ class TestEmailSending(unittest.TestCase):
         use_case = AnswerEvaluationFormUseCase(email_gateway)
         response = use_case.execute(self.form)
 
-        self.assertIn('EMAIL_NOT_SENT', response['errors'])
+        self.assertIn('EMAIL_SENDING_UNAVAIBLE', response['errors'])
         self.assertFalse(response['success'])    
         
     def test_should_not_send_email_if_errors_happened(self):

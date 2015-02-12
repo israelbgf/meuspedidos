@@ -51,7 +51,7 @@ class AnswerEvaluationFormUseCase:
         try:
             self.email_gateway.send(form.email, self.figures_aptitude(form))
         except Exception:
-            self.errors.append('EMAIL_NOT_SENT')
+            self.errors.append('EMAIL_SENDING_UNAVAIBLE')
 
     def figures_aptitude(self, form):
         skills = form.skills
