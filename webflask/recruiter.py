@@ -7,7 +7,7 @@ from flask_mail import Mail
 from email_gateway import FlaskEmailGateway
 from config import FLASK_CONFIGURATION
 
-from request_parsers import safe_int
+from request_parsers import SafeForm
 from evaluator.usecases.answer_evaluation_form import AnswerEvaluationFormUseCase
 from evaluator.usecases.answer_evaluation_form import EvaluationForm
 
@@ -24,16 +24,18 @@ def index():
 
 @app.route("/api/recruitment", methods=['POST'])
 def recruitment():
-    form = EvaluationForm(request.form['name'], request.form['email'], skills={
-        'html': safe_int(request.form['html']),
-        'css': safe_int(request.form['css']),
-        'javascript': safe_int(request.form['javascript']),
-        'python': safe_int(request.form['python']),
-        'django': safe_int(request.form['django']),
-        'android': safe_int(request.form['android']),
-        'ios': safe_int(request.form['ios']),
+    form = SafeForm(request.form)
+    
+    evaluation_form = EvaluationForm(form.str('name'), form.str('email'), skills={
+        'html': form.int('html'),
+        'css': form.int('css'),
+        'javascript': form.int('javascript'),
+        'python': form.int('python'),
+        'django': form.int('django'),
+        'android': form.int('android'),
+        'ios': form.int('ios'),
     })
-    response = AnswerEvaluationFormUseCase(FlaskEmailGateway(mail)).execute(form)
+    response = AnswerEvaluationFormUseCase(FlaskEmailGateway(mail)).execute(evaluation_form)
     return flask.jsonify(**response)
 
 

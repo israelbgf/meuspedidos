@@ -22,28 +22,34 @@ class AnswerEvaluationFormUseCase:
         self.errors = []
         self.email_gateway = email_gateway
 
+
     def execute(self, form):
         self.validate_contact(form)
         self.validate_skills(form)
-        self.email_gateway.send(form.email, self.figures_aptitude(form))
+        
+        if not self.errors:
+            self.send_email(form)
 
-        if self.errors:
-            return {'success': False, 'errors': self.errors}
-        else:
-            return {'success': True, 'errors': self.errors}
+        return {'success': not self.errors, 'errors': self.errors}
 
     def validate_contact(self, form):
         if not form.name:
             self.errors.append('REQUIRED_NAME')
         if not form.email:
             self.errors.append('REQUIRED_EMAIL')
-        if not match(VALID_EMAIL_PATTERN, form.email):
+        if not match(VALID_EMAIL_PATTERN, form.email if form.email else ''):
             self.errors.append('INVALID_EMAIL')
 
     def validate_skills(self, form):
         for skill, level in form.skills.iteritems():
             if level < 0 or level > 10:
                 self.errors.append('INVALID_{0}_SKILL'.format(skill.upper()))
+
+    def send_email(self, form):
+        try:
+            self.email_gateway.send(form.email, self.figures_aptitude(form))
+        except Exception:
+            self.errors.append('EMAIL_NOT_SENT')
 
     def figures_aptitude(self, form):
         skills = form.skills
