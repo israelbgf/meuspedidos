@@ -3,7 +3,9 @@ from flask import Flask
 from flask import render_template
 from flask import request
 from flask_mail import Mail
+
 from email_gateway import FlaskEmailGateway
+from config import FLASK_CONFIGURATION
 
 from request_parsers import safe_int
 from evaluator.usecases.answer_evaluation_form import AnswerEvaluationFormUseCase
@@ -11,11 +13,7 @@ from evaluator.usecases.answer_evaluation_form import EvaluationForm
 
 
 app = Flask(__name__)
-app.config.update(
-    DEBUG=True,
-    MAIL_PORT=1025
-)
-
+app.config.update(FLASK_CONFIGURATION)
 mail = Mail(app)
 
 
@@ -38,10 +36,7 @@ def recruitment():
     response = AnswerEvaluationFormUseCase(FlaskEmailGateway(mail)).execute(form)
     return flask.jsonify(**response)
 
+
 @app.errorhandler(404)
 def not_found(error):
     return render_template('404.html'), 404
-
-
-if __name__ == "__main__":
-    app.run(debug=True)
