@@ -1,3 +1,3 @@
-from webflask import recruiter
+from webflask.recruiter import app
 
-recruiter.app.run()
+app.run()
