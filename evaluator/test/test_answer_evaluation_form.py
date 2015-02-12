@@ -45,8 +45,13 @@ class TestEvaluationFormValidation(unittest.TestCase):
 
     def test_valid_answer_form(self):
         response = self.use_case.execute(EvaluationForm(name='Israel', email='israel@email.com'))
-        self.assertTrue(response['success'])
         self.assertFalse(response['errors'])
+        self.assertTrue(response['success'])
+
+    def test_answer_form_with_html_skill_undefined(self):
+        response = self.use_case.execute(EvaluationForm(name='Israel', email='israel@email.com', skills={'html': None}))
+        self.assertTrue(response['success'])
+        self.assertNotIn("INVALID_HTML_SKILL", response['errors'])
 
     def test_answer_form_with_html_skill_negative(self):
         response = self.use_case.execute(EvaluationForm(skills={'html': -1}))

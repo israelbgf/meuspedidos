@@ -10,6 +10,7 @@ class EvaluationForm:
         self.skills = skills if skills else {
             'html': 0,
             'css': 0,
+            'javascript': 0,
             'python': 0,
             'django': 0,
             'ios': 0,
@@ -42,6 +43,7 @@ class AnswerEvaluationFormUseCase:
 
     def validate_skills(self, form):
         for skill, level in form.skills.iteritems():
+            level = 0 if level is None else level
             if level < 0 or level > 10:
                 self.errors.append('INVALID_{0}_SKILL'.format(skill.upper()))
 
