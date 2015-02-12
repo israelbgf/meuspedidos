@@ -1,5 +1,5 @@
 import unittest
-from usecases.answer_evaluation_form import AnswerEvaluationFormUseCase, EvaluationForm
+from evaluator.usecases.answer_evaluation_form import AnswerEvaluationFormUseCase, EvaluationForm
 
 
 class EmailGatewaySpy(object):
