@@ -46,6 +46,7 @@ STATIC_ROOT = 'staticfiles'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 EMAIL_HOST = os.environ.get('MAIL_SERVER', 'localhost')
 EMAIL_PORT = int(os.environ.get('MAIL_PORT', 1025))
