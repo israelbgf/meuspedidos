@@ -49,4 +49,4 @@ STATICFILES_DIRS = (
 EMAIL_HOST = os.environ.get('MAIL_SERVER', 'localhost')
 EMAIL_PORT = int(os.environ.get('MAIL_PORT', 1025))
 EMAIL_HOST_USER = os.environ.get('MAIL_USERNAME', '')
-EMAIL_MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD', '')
+EMAIL_HOST_PASSWORD = os.environ.get('MAIL_PASSWORD', '')
