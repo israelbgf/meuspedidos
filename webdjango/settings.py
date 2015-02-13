@@ -12,11 +12,12 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = 'zpye1s(h9tqjq083=euo(aw4ctlvj129^cwn3g8bixaiqn-o0c'
 
-DEBUG = True
+DEBUG = False
+ALLOWED_HOSTS = ['*',]
+
 TEMPLATE_DEBUG = False
 
 TEMPLATE_DIRS = (os.path.join(BASE_DIR, 'webdjango', 'templates'),)
-ALLOWED_HOSTS = []
 
 INSTALLED_APPS = (
     'django.contrib.staticfiles',
