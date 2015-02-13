@@ -1,5 +1,5 @@
 import unittest
-from request_parsers import SafeForm
+from parsers import SafeForm
 
 
 class TestSafeForm(unittest.TestCase):

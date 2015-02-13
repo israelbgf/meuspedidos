@@ -1,7 +1,7 @@
 import os
 
 if os.environ.get('DELIVERY_MECHANISM', 'FLASK'):
-    from webflask.recruiter import app
+    from webflask.entrypoint import app
 else:
     from webdjango.wsgi import app
 

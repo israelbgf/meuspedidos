@@ -3,7 +3,7 @@ from parsers import SafeForm
 from evaluator.usecases.answer_evaluation_form import AnswerEvaluationFormUseCase, EvaluationForm
 import json
 from django.http import HttpResponse
-from webdjango.email_gateway import DjangoEmailGateway
+from webdjango.email import DjangoEmailGateway
 
 
 def index(request):

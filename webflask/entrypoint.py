@@ -4,10 +4,10 @@ from flask import render_template
 from flask import request
 from flask_mail import Mail
 
-from email_gateway import FlaskEmailGateway
+from email import FlaskEmailGateway
 from config import FLASK_CONFIGURATION
 
-from request_parsers import SafeForm
+from parsers import SafeForm
 from evaluator.usecases.answer_evaluation_form import AnswerEvaluationFormUseCase
 from evaluator.usecases.answer_evaluation_form import EvaluationForm
 
