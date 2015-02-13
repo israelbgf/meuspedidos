@@ -52,3 +52,10 @@ EMAIL_HOST = os.environ.get('MAIL_SERVER', 'localhost')
 EMAIL_PORT = int(os.environ.get('MAIL_PORT', 1025))
 EMAIL_HOST_USER = os.environ.get('MAIL_USERNAME', '')
 EMAIL_HOST_PASSWORD = os.environ.get('MAIL_PASSWORD', '')
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'unique-snowflake'
+    }
+}
