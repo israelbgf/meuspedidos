@@ -19,7 +19,7 @@ mail = Mail(app)
 
 @app.route("/")
 def index():
-    return render_template('index.html')
+    return render_template('index.html', delivery_mechanism='Flask')
 
 
 @app.route("/api/recruitment", methods=['POST'])

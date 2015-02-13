@@ -7,7 +7,7 @@ from webdjango.email import DjangoEmailGateway
 
 
 def index(request):
-    return render(request, 'index.html', {})
+    return render(request, 'index.html', {'delivery_mechanism': 'Django'})
 
 
 def recruitment(request):
