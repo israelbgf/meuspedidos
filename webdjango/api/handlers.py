@@ -1,7 +1,8 @@
 from piston.handler import BaseHandler
+
 from evaluator.usecases.answer_evaluation_form import EvaluationForm, AnswerEvaluationFormUseCase
 from parsers import SafeForm
-from webdjango.email import DjangoAsyncEmailGateway
+from webdjango.gateways.email import DjangoAsyncEmailGateway
 
 
 class EvaluationFormHandler(BaseHandler):

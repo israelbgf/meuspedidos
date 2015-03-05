@@ -1,10 +1,13 @@
 from django.test import TestCase
+
 from django.core import mail
 from django.test.utils import override_settings
 
 from evaluator.usecases.answer_evaluation_form import EvaluationForm
-from webdjango.email import *
-from webdjango.models import Evaluation, EvaluationFormGateway
+
+from webdjango.gateways.email import *
+from webdjango.models import Evaluation
+from webdjango.gateways.persistence import EvaluationFormGateway
 
 
 class EmailGateway(TestCase):
@@ -20,7 +23,7 @@ class EmailGateway(TestCase):
         self.assertEqual(len(mail.outbox), 4)
 
     def test_sync_gateway(self):
-        gateway = DjangoEmailGateway()
+        gateway = DjangoSyncEmailGateway()
         gateway.send(self.to_email, self.templates)
         self.assertEqual(len(mail.outbox), 4)
 

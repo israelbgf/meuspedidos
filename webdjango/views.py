@@ -1,9 +1,11 @@
+import json
+
 from django.shortcuts import render
+from django.http import HttpResponse
+
 from parsers import SafeForm
 from evaluator.usecases.answer_evaluation_form import AnswerEvaluationFormUseCase, EvaluationForm
-import json
-from django.http import HttpResponse
-from webdjango.email import DjangoEmailGateway
+from webdjango.gateways.email import DjangoSyncEmailGateway
 
 
 def index(request):
@@ -23,5 +25,5 @@ def recruitment(request):
         'ios': form.int('ios'),
         })
     
-    response = AnswerEvaluationFormUseCase(DjangoEmailGateway()).execute(evaluation_form)
+    response = AnswerEvaluationFormUseCase(DjangoSyncEmailGateway()).execute(evaluation_form)
     return HttpResponse(json.dumps(response), content_type="application/json")

@@ -1,6 +1,8 @@
 from django.core.mail import EmailMultiAlternatives
 from django.template import loader, Context
-from webdjango import tasks
+
+from webdjango.queue import tasks
+
 
 EMAIL_TEMPLATE_LOOKUP = {
     'FRONTEND': 'email/frontend.html',
@@ -26,7 +28,7 @@ class BaseEmailGateway(object):
         raise e
 
 
-class DjangoEmailGateway(BaseEmailGateway):
+class DjangoSyncEmailGateway(BaseEmailGateway):
 
     def send_email(self, email, templates):
         subject, from_email, to = 'Obrigado por se candidatar!', 'recruitment@meuspedidos.com', email
