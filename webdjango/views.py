@@ -4,9 +4,8 @@ from django.shortcuts import render
 from django.http import HttpResponse
 
 from parsers import SafeForm
-from evaluator.usecases.answer_evaluation_form import AnswerEvaluationFormUseCase, EvaluationForm
+from evaluator.usecases.answer_evaluation_form import EvaluationForm
 from webdjango.factories import create_sync_evaluation_form_usecase
-from webdjango.gateways.email import DjangoSyncEmailGateway
 
 
 def index(request):
