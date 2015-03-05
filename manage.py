@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 import os
 import sys
-from webdjango.tasks import *
 
 if __name__ == "__main__":
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "webdjango.settings")

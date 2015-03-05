@@ -1,6 +1,6 @@
 from django.core.mail import EmailMultiAlternatives
 from django.template import loader, Context
-from webdjango import tasks
+from celery import app
 
 EMAIL_TEMPLATE_LOOKUP = {
     'FRONTEND': 'email/frontend.html',
@@ -45,4 +45,11 @@ class DjangoAsyncEmailGateway(BaseEmailGateway):
 
         for template in templates:
             html_content = loader.get_template(EMAIL_TEMPLATE_LOOKUP[template]).render(Context({}))
-            tasks.send_email.delay(subject, from_email, [email], html_content)
+            send_email.delay(subject, from_email, [email], html_content)
+
+
+@app.task
+def send_email(subject, from_email, to, html_content):
+    msg = EmailMultiAlternatives(subject, '', from_email, to)
+    msg.attach_alternative(html_content, "text/html")
+    msg.send()
