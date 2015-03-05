@@ -6,12 +6,12 @@ class EvaluationFormGateway(object):
     def save(self, form):
         evaluation = Evaluation(name=form.name,
                                 email=form.email,
-                                html_skill=form.skills['html'],
-                                css_skill=form.skills['css'],
-                                javascript_skill=form.skills['javascript'],
-                                python_skill=form.skills['python'],
-                                django_skill=form.skills['django'],
-                                ios_skill=form.skills['ios'],
-                                android_skill=form.skills['android'],
+                                html_skill=form.skills.get('html'),
+                                css_skill=form.skills.get('css'),
+                                javascript_skill=form.skills.get('javascript'),
+                                python_skill=form.skills.get('python'),
+                                django_skill=form.skills.get('django'),
+                                ios_skill=form.skills.get('ios'),
+                                android_skill=form.skills.get('android')
         )
         evaluation.save()

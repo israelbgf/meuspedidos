@@ -34,3 +34,9 @@ class PersistenceGateway(TestCase):
         gateway = EvaluationFormGateway()
         gateway.save(form)
         self.assertIsNotNone(Evaluation.objects.get(email='user@provider.com'))
+
+    def test_persistence_with_null_values(self):
+        form = EvaluationForm('User', 'user@provider.com', skills={'android': 10})
+        gateway = EvaluationFormGateway()
+        gateway.save(form)
+        self.assertIsNotNone(Evaluation.objects.get(email='user@provider.com'))

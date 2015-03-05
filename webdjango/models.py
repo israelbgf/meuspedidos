@@ -2,15 +2,15 @@ from django.db import models
 
 
 class Evaluation(models.Model):
-    email = models.CharField(max_length=200)
-    name = models.CharField(max_length=200)
+    email = models.CharField(max_length=200, blank=True)
+    name = models.CharField(max_length=200, blank=True)
     
-    html_skill = models.IntegerField()
-    css_skill = models.IntegerField()
-    javascript_skill = models.IntegerField()
-    android_skill = models.IntegerField()
-    ios_skill = models.IntegerField()
-    django_skill = models.IntegerField()
-    python_skill = models.IntegerField()
+    html_skill = models.IntegerField(blank=True, null=True)
+    css_skill = models.IntegerField(blank=True, null=True)
+    javascript_skill = models.IntegerField(blank=True, null=True)
+    android_skill = models.IntegerField(blank=True, null=True)
+    ios_skill = models.IntegerField(blank=True, null=True)
+    django_skill = models.IntegerField(blank=True, null=True)
+    python_skill = models.IntegerField(blank=True, null=True)
 
 
