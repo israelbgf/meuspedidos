@@ -28,7 +28,6 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
@@ -54,9 +53,9 @@ EMAIL_PORT = int(os.environ.get('MAIL_PORT', 1025))
 EMAIL_HOST_USER = os.environ.get('MAIL_USERNAME', '')
 EMAIL_HOST_PASSWORD = os.environ.get('MAIL_PASSWORD', '')
 
-CACHES = {
+DATABASES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'LOCATION': 'unique-snowflake'
-    }
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'default',
+        }
 }
