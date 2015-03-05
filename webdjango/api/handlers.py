@@ -2,6 +2,7 @@ from piston.handler import BaseHandler
 
 from evaluator.usecases.answer_evaluation_form import EvaluationForm, AnswerEvaluationFormUseCase
 from parsers import SafeForm
+from webdjango.factories import create_async_evaluation_form_usecase
 from webdjango.gateways.email import DjangoAsyncEmailGateway
 
 
@@ -21,4 +22,6 @@ class EvaluationFormHandler(BaseHandler):
             'ios': form.int('ios'),
             })
 
-        return AnswerEvaluationFormUseCase(DjangoAsyncEmailGateway()).execute(evaluation_form)
+        usecase = create_async_evaluation_form_usecase()
+        response = usecase.execute(evaluation_form)
+        return response
