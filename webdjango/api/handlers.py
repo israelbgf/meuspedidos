@@ -5,9 +5,9 @@ from webdjango.email import DjangoAsyncEmailGateway
 
 
 class EvaluationFormHandler(BaseHandler):
-    methods_allowed = ('GET',)
+    methods_allowed = ('POST',)
 
-    def read(self, request):
+    def create(self, request):
         form = SafeForm(request.POST.dict())
 
         evaluation_form = EvaluationForm(form.str('name'), form.str('email'), skills={
