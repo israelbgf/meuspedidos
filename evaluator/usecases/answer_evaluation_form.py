@@ -19,17 +19,19 @@ class EvaluationForm:
 
 
 class AnswerEvaluationFormUseCase:
-    def __init__(self, email_gateway):
+    def __init__(self, notification_gateway, persistence_gateway):
         self.errors = []
-        self.email_gateway = email_gateway
-
+        self.notification = notification_gateway
+        self.persistence = persistence_gateway
 
     def execute(self, form):
         self.validate_contact(form)
         self.validate_skills(form)
-        
+
         if not self.errors:
             self.send_email(form)
+
+        self.persistence.save(form)
 
         return {'success': not self.errors, 'errors': self.errors}
 
@@ -49,7 +51,7 @@ class AnswerEvaluationFormUseCase:
 
     def send_email(self, form):
         try:
-            self.email_gateway.send(form.email, self.figures_aptitude(form))
+            self.notification.send(form.email, self.figures_aptitude(form))
         except Exception:
             self.errors.append('EMAIL_SENDING_UNAVAIBLE')
 

@@ -2,26 +2,35 @@ import unittest
 from evaluator.usecases.answer_evaluation_form import AnswerEvaluationFormUseCase, EvaluationForm
 
 
-class EmailGatewaySpy(object):
+class PersistenceGatewaySpy(object):
     
     def __init__(self):
-        self.number_of_invokes = 0
+        self.form = None
     
+    def save(self, form):
+        self.form = form
+
+
+class EmailGatewaySpy(object):
+
+    def __init__(self):
+        self.email = None
+        self.templates = None
+
     def send(self, email, templates):
         self.email = email
         self.templates = templates
-        self.number_of_invokes += 1
 
 
 class AlwaysFailingEmailGateway(object):
     
-    def send(self, email, templates):
+    def execute(self, *parameters):
         raise Exception('Some nasty problem')
 
 
 class TestEvaluationFormValidation(unittest.TestCase):
     def setUp(self):
-        self.use_case = AnswerEvaluationFormUseCase(EmailGatewaySpy())
+        self.use_case = AnswerEvaluationFormUseCase(EmailGatewaySpy(), PersistenceGatewaySpy())
 
     def test_answer_form_with_blank_name(self):
         response = self.use_case.execute(EvaluationForm())
@@ -72,14 +81,14 @@ class TestEvaluationFormValidation(unittest.TestCase):
 class TestEmailSending(unittest.TestCase):
     def setUp(self):
         self.email_gateway = EmailGatewaySpy()
-        self.use_case = AnswerEvaluationFormUseCase(self.email_gateway)
+        self.use_case = AnswerEvaluationFormUseCase(self.email_gateway, PersistenceGatewaySpy())
         self.form = EvaluationForm()
         self.form.name = "Solid Snake"
         self.form.email = "snake@outerheaven.com"
 
     def test_gracefully_email_error_handling(self):
         email_gateway = AlwaysFailingEmailGateway()
-        use_case = AnswerEvaluationFormUseCase(email_gateway)
+        use_case = AnswerEvaluationFormUseCase(email_gateway, PersistenceGatewaySpy())
         response = use_case.execute(self.form)
 
         self.assertIn('EMAIL_SENDING_UNAVAIBLE', response['errors'])
@@ -89,7 +98,7 @@ class TestEmailSending(unittest.TestCase):
         response = self.use_case.execute(EvaluationForm())
 
         self.assertTrue(response['errors'])
-        self.assertEqual(self.email_gateway.number_of_invokes, 0)
+        self.assertIsNone(self.email_gateway.email)
         self.assertFalse(response['success'])
 
     def test_sent_email_for_frontend_aptitude(self):
@@ -148,3 +157,16 @@ class TestEmailSending(unittest.TestCase):
         self.assertIn('NONE', self.email_gateway.templates)
         self.assertEqual(self.email_gateway.email, "snake@outerheaven.com")
         self.assertTrue(response['success'])
+
+
+class TestPersistence(unittest.TestCase):
+    def setUp(self):
+        self.persistence_gateway = PersistenceGatewaySpy()
+        self.use_case = AnswerEvaluationFormUseCase(EmailGatewaySpy(), self.persistence_gateway)
+        self.form = EvaluationForm()
+        self.form.name = "Solid Snake"
+        self.form.email = "snake@outerheaven.com"
+
+    def test_persistence(self):
+        self.use_case.execute(self.form)
+        self.assertIsNotNone(self.persistence_gateway.form)

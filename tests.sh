@@ -1,3 +1,3 @@
-clear
-echo 'Running all project tests.'
-python -m unittest discover
+#!/bin/sh
+echo 'Running evaluator tests.'
+python -m unittest discover -s evaluator
