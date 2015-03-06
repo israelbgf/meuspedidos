@@ -26,6 +26,7 @@ class AnswerEvaluationFormUseCase:
         self.persistence = persistence_gateway
 
     def execute(self, form):
+        form = self.normalize_input(form)
         self.validate_contact(form)
         self.validate_skills(form)
 
@@ -35,6 +36,12 @@ class AnswerEvaluationFormUseCase:
         self.persistence.save(form)
 
         return {'success': not self.errors, 'errors': self.errors}
+
+    def normalize_input(self, form):
+        normalized_skills = form.skills.copy()
+        for skill, level in form.skills.iteritems():
+            normalized_skills[skill] = 0 if level is None else level
+        return EvaluationForm(form.name, form.email, normalized_skills)
 
     def validate_contact(self, form):
         if not form.name:
@@ -46,7 +53,6 @@ class AnswerEvaluationFormUseCase:
 
     def validate_skills(self, form):
         for skill, level in form.skills.iteritems():
-            level = 0 if level is None else level
             if level < 0 or level > 10:
                 self.errors.append('INVALID_{0}_SKILL'.format(skill.upper()))
 
