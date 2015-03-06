@@ -108,7 +108,7 @@ class TestEmailSending(unittest.TestCase):
 
         response = self.use_case.execute(self.form)
 
-        self.assertIn('FRONTEND', self.email_gateway.templates)
+        self.assertEqual(['FRONTEND'], self.email_gateway.templates)
         self.assertEqual(self.email_gateway.email, "snake@outerheaven.com")
         self.assertTrue(response['success'])
 
@@ -118,7 +118,7 @@ class TestEmailSending(unittest.TestCase):
 
         response = self.use_case.execute(self.form)
 
-        self.assertIn('BACKEND', self.email_gateway.templates)
+        self.assertEqual(['BACKEND'], self.email_gateway.templates)
         self.assertEqual(self.email_gateway.email, "snake@outerheaven.com")
         self.assertTrue(response['success'])
 
@@ -128,7 +128,7 @@ class TestEmailSending(unittest.TestCase):
 
         response = self.use_case.execute(self.form)
 
-        self.assertIn('MOBILE', self.email_gateway.templates)
+        self.assertEqual(['MOBILE'], self.email_gateway.templates)
         self.assertEqual(self.email_gateway.email, "snake@outerheaven.com")
         self.assertTrue(response['success'])
 
@@ -154,7 +154,7 @@ class TestEmailSending(unittest.TestCase):
         response = self.use_case.execute(self.form)
 
         self.assertEqual(1, len(self.email_gateway.templates))
-        self.assertIn('NONE', self.email_gateway.templates)
+        self.assertEqual(['NONE'], self.email_gateway.templates)
         self.assertEqual(self.email_gateway.email, "snake@outerheaven.com")
         self.assertTrue(response['success'])
 
