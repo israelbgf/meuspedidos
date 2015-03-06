@@ -55,7 +55,8 @@ EMAIL_HOST_PASSWORD = os.environ.get('MAIL_PASSWORD', '')
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'default',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'meuspedidos',
+        'USER': 'root'
         }
 }
