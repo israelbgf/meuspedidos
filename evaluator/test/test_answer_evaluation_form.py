@@ -76,6 +76,10 @@ class TestEvaluationFormValidation(unittest.TestCase):
         response = self.use_case.execute(EvaluationForm(skills={'ios': 5}))
         self.assertFalse(response['success'])
         self.assertNotIn("INVALID_IOS_SKILL", response['errors'])
+        
+    def test_answer_form_should_treat_other_values_as_zero_if_partially_overwriten(self):
+        form = EvaluationForm(skills={'ios': 5})
+        self.assertEqual(form.skills['python'], 0)
 
 
 class TestEmailSending(unittest.TestCase):

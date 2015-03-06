@@ -4,10 +4,10 @@ VALID_EMAIL_PATTERN = '[^@]+@[^@]+\.[^@]+'
 
 
 class EvaluationForm:
-    def __init__(self, name="", email="", skills=None):
+    def __init__(self, name="", email="", skills={}):
         self.name = name
         self.email = email
-        self.skills = skills if skills else {
+        self.skills = {
             'html': 0,
             'css': 0,
             'javascript': 0,
@@ -16,6 +16,7 @@ class EvaluationForm:
             'ios': 0,
             'android': 0
         }
+        self.skills.update(skills)
 
 
 class AnswerEvaluationFormUseCase:
