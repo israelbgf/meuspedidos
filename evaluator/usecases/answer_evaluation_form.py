@@ -32,8 +32,7 @@ class AnswerEvaluationFormUseCase:
 
         if not self.errors:
             self.send_email(form)
-
-        self.persistence.save(form)
+            self.persistence.save(form)
 
         return {'success': not self.errors, 'errors': self.errors}
 
