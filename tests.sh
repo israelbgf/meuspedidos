@@ -6,8 +6,8 @@ echo '-------------------------'
 
 python -m unittest discover -s evaluator
 
-echo '-------------------------'
-echo 'Running INTEGRATION tests.'
-echo '-------------------------'
+#echo '-------------------------'
+#echo 'Running INTEGRATION tests.'
+#echo '-------------------------'
 
-python manage.py test --settings=webdjango.settings_test
+#python manage.py test --settings=webdjango.settings_test
