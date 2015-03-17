@@ -47,7 +47,7 @@ class AnswerEvaluationFormUseCase:
             self.errors.append('REQUIRED_NAME')
         if not form.email:
             self.errors.append('REQUIRED_EMAIL')
-        if not match(VALID_EMAIL_PATTERN, form.email if form.email else ''):
+        elif not match(VALID_EMAIL_PATTERN, form.email if form.email else ''):
             self.errors.append('INVALID_EMAIL')
 
     def validate_skills(self, form):

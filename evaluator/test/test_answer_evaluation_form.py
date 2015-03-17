@@ -46,6 +46,7 @@ class TestEvaluationFormValidation(unittest.TestCase):
     def test_answer_form_with_blank_email(self):
         response = self.use_case.execute(EvaluationForm())
         self.assertValidationFailed(response)
+        self.assertNotIn("INVALID_EMAIL", response['errors'])
         self.assertIn("REQUIRED_EMAIL", response['errors'])
 
     def test_answer_form_with_invalid_email(self):
@@ -56,7 +57,7 @@ class TestEvaluationFormValidation(unittest.TestCase):
     def test_answer_form_with_none_email(self):
         response = self.use_case.execute(EvaluationForm(email=None))
         self.assertValidationFailed(response)
-        self.assertIn("INVALID_EMAIL", response['errors'])
+        self.assertIn("REQUIRED_EMAIL", response['errors'])
 
     def test_answer_form_with_html_skill_undefined(self):
         response = self.use_case.execute(EvaluationForm(name='Israel', email='israel@email.com', skills={'html': None}))
