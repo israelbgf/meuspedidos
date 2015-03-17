@@ -19,7 +19,7 @@ class AnswerEvaluationFormUseCase:
         self.persistence = persistence_gateway
 
     def execute(self, request_model):
-        evaluation_form = self.parse_and_validate(request_model)
+        evaluation_form = self.build_valid_model(request_model)
 
         if not self.errors:
             self.send_email(evaluation_form)
@@ -27,17 +27,17 @@ class AnswerEvaluationFormUseCase:
 
         return self.create_response()
 
-    def parse_and_validate(self, input):
+    def build_valid_model(self, request):
         return DataStructure(
-            name=self.parse_name(input.name),
-            email=self.parse_email(input.email),
-            html_skill=self.parse_skill(input.html_skill, 'HTML'),
-            css_skill=self.parse_skill(input.css_skill, 'CSS'),
-            javascript_skill=self.parse_skill(input.javascript_skill, 'JAVASCRIPT'),
-            python_skill=self.parse_skill(input.python_skill, 'PYTHON'),
-            django_skill=self.parse_skill(input.django_skill, 'DJANGO'),
-            ios_skill=self.parse_skill(input.ios_skill, 'IOS'),
-            android_skill=self.parse_skill(input.android_skill, 'ANDROID')
+            name=self.parse_name(request.name),
+            email=self.parse_email(request.email),
+            html_skill=self.parse_skill(request.html_skill, 'HTML'),
+            css_skill=self.parse_skill(request.css_skill, 'CSS'),
+            javascript_skill=self.parse_skill(request.javascript_skill, 'JAVASCRIPT'),
+            python_skill=self.parse_skill(request.python_skill, 'PYTHON'),
+            django_skill=self.parse_skill(request.django_skill, 'DJANGO'),
+            ios_skill=self.parse_skill(request.ios_skill, 'IOS'),
+            android_skill=self.parse_skill(request.android_skill, 'ANDROID')
         )
 
     def parse_name(self, value):
