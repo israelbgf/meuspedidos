@@ -3,20 +3,13 @@ from re import match
 VALID_EMAIL_PATTERN = '[^@]+@[^@]+\.[^@]+'
 
 
-class EvaluationForm:
-    def __init__(self, name="", email="", skills={}):
-        self.name = name
-        self.email = email
-        self.skills = {
-            'html': 0,
-            'css': 0,
-            'javascript': 0,
-            'python': 0,
-            'django': 0,
-            'ios': 0,
-            'android': 0
-        }
-        self.skills.update(skills)
+class DataStructure(object):
+    def __init__(self, **values):
+        for field_name, field_value in values.iteritems():
+            setattr(self, field_name, field_value)
+            
+    def __getattr__(self, name):
+        return None
 
 
 class AnswerEvaluationFormUseCase:
@@ -25,35 +18,50 @@ class AnswerEvaluationFormUseCase:
         self.email = email_gateway
         self.persistence = persistence_gateway
 
-    def execute(self, form):
-        form = self.normalize_input(form)
-        self.validate_contact(form)
-        self.validate_skills(form)
+    def execute(self, request_model):
+        evaluation_form = self.parse_and_validate(request_model)
 
         if not self.errors:
-            self.send_email(form)
-            self.persistence.save(form)
+            self.send_email(evaluation_form)
+            self.persistence.save(evaluation_form)
 
-        return {'success': not self.errors, 'errors': self.errors}
+        return self.create_response()
 
-    def normalize_input(self, form):
-        normalized_skills = form.skills.copy()
-        for skill, level in form.skills.iteritems():
-            normalized_skills[skill] = 0 if level is None else level
-        return EvaluationForm(form.name, form.email, normalized_skills)
+    def parse_and_validate(self, input):
+        return DataStructure(
+            name=self.parse_name(input.name),
+            email=self.parse_email(input.email),
+            html_skill=self.parse_skill(input.html_skill, 'HTML'),
+            css_skill=self.parse_skill(input.css_skill, 'CSS'),
+            javascript_skill=self.parse_skill(input.javascript_skill, 'JAVASCRIPT'),
+            python_skill=self.parse_skill(input.python_skill, 'PYTHON'),
+            django_skill=self.parse_skill(input.django_skill, 'DJANGO'),
+            ios_skill=self.parse_skill(input.ios_skill, 'IOS'),
+            android_skill=self.parse_skill(input.android_skill, 'ANDROID')
+        )
 
-    def validate_contact(self, form):
-        if not form.name:
+    def parse_name(self, value):
+        if not value:
             self.errors.append('REQUIRED_NAME')
-        if not form.email:
-            self.errors.append('REQUIRED_EMAIL')
-        elif not match(VALID_EMAIL_PATTERN, form.email if form.email else ''):
-            self.errors.append('INVALID_EMAIL')
+        return value
 
-    def validate_skills(self, form):
-        for skill, level in form.skills.iteritems():
-            if level < 0 or level > 10:
-                self.errors.append('INVALID_{0}_SKILL'.format(skill.upper()))
+    def parse_email(self, value):
+        if not value:
+            self.errors.append('REQUIRED_EMAIL')
+        elif not match(VALID_EMAIL_PATTERN, value if value else ''):
+            self.errors.append('INVALID_EMAIL')
+        return value
+        
+    def parse_skill(self, value, skill_name):
+        try:
+            skill = int(value if value else 0)
+        except ValueError:
+            self.errors.append('INVALID_{0}_SKILL'.format(skill_name))
+            return
+        
+        if skill < 0 or skill > 10:
+            self.errors.append('INVALID_{0}_SKILL'.format(skill_name))
+        return skill
 
     def send_email(self, form):
         try:
@@ -62,12 +70,14 @@ class AnswerEvaluationFormUseCase:
             self.errors.append('EMAIL_SENDING_UNAVAIBLE')
 
     def figures_aptitude(self, form):
-        skills = form.skills
         aptitudes = []
-        if skills.get('html', 0) >= 7 and skills.get('css', 0) >= 7:
+        if form.html_skill >= 7 and form.css_skill >= 7 and form.javascript_skill >= 7:
             aptitudes.append('FRONTEND')
-        if skills.get('python', 0) >= 7 and skills.get('django', 0) >= 7:
+        if form.python_skill >= 7 and form.django_skill >= 7:
             aptitudes.append('BACKEND')
-        if skills.get('android', 0) >= 7 and skills.get('ios', 0) >= 7:
+        if form.android_skill >= 7 or form.ios_skill >= 7:
             aptitudes.append('MOBILE')
         return ['NONE'] if not aptitudes else aptitudes
+
+    def create_response(self):
+        return {'success': not self.errors, 'errors': self.errors}

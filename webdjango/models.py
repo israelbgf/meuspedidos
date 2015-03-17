@@ -8,9 +8,9 @@ class Evaluation(models.Model):
     html_skill = models.IntegerField(blank=True, null=True)
     css_skill = models.IntegerField(blank=True, null=True)
     javascript_skill = models.IntegerField(blank=True, null=True)
-    android_skill = models.IntegerField(blank=True, null=True)
-    ios_skill = models.IntegerField(blank=True, null=True)
-    django_skill = models.IntegerField(blank=True, null=True)
     python_skill = models.IntegerField(blank=True, null=True)
+    django_skill = models.IntegerField(blank=True, null=True)
+    ios_skill = models.IntegerField(blank=True, null=True)
+    android_skill = models.IntegerField(blank=True, null=True)
 
 

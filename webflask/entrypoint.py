@@ -6,8 +6,7 @@ from flask_mail import Mail
 
 from email import FlaskEmailGateway
 from config import FLASK_CONFIGURATION
-
-from parsers import SafeForm
+from evaluator.parsers import SafeForm
 from evaluator.usecases.answer_evaluation_form import AnswerEvaluationFormUseCase
 from evaluator.usecases.answer_evaluation_form import EvaluationForm
 

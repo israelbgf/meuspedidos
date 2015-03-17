@@ -2,16 +2,15 @@ from webdjango.models import Evaluation
 
 
 class EvaluationFormGateway(object):
-
     def save(self, form):
         evaluation = Evaluation(name=form.name,
                                 email=form.email,
-                                html_skill=form.skills.get('html'),
-                                css_skill=form.skills.get('css'),
-                                javascript_skill=form.skills.get('javascript'),
-                                python_skill=form.skills.get('python'),
-                                django_skill=form.skills.get('django'),
-                                ios_skill=form.skills.get('ios'),
-                                android_skill=form.skills.get('android')
-        )
+                                html_skill=form.html_skill,
+                                css_skill=form.css_skill,
+                                javascript_skill=form.javascript_skill,
+                                python_skill=form.python_skill,
+                                django_skill=form.django_skill,
+                                ios_skill=form.ios_skill,
+                                android_skill=form.android_skill)
+        
         evaluation.save()
